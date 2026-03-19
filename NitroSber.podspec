@@ -21,6 +21,8 @@ Pod::Spec.new do |s|
 
   s.dependency 'React-jsi'
   s.dependency 'React-callinvoker'
+  # SberID iOS SDK (dynamic). Consumers can still override via Podfile.
+  s.dependency 'SIDSDK'
 
   load 'nitrogen/generated/ios/NitroSber+autolinking.rb'
   add_nitrogen_files(s)
