@@ -1,0 +1,17 @@
+{
+  "cxxNamespace": ["nitrosber"],
+  "ios": {
+    "iosModuleName": "NitroSber"
+  },
+  "android": {
+    "androidNamespace": ["nitrosber"],
+    "androidCxxLibName": "nitrosber"
+  },
+  "autolinking": {
+    "NitroSber": {
+      "swift": "NitroSber",
+      "kotlin": "NitroSber"
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
