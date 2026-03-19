@@ -1,5 +1,5 @@
 package com.margelo.nitro.nitrosber
-  
+
 import android.app.Application
 import android.graphics.Color
 import android.util.Log
@@ -15,6 +15,7 @@ import sid.sdk.core.global.models.SIDPreferencesCore
 import sid.sdk.core.global.models.StandName
 import sid.sdk.core.init.SID
 import kotlin.coroutines.CoroutineContext
+import sid.sdk.core.auth.init.SIDLogin.Login
 
 @DoNotStrip
 class NitroSber : HybridNitroSberSpec() {
