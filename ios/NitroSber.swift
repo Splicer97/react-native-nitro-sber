@@ -27,8 +27,8 @@ final class NitroSber: HybridNitroSberSpec {
   ) throws -> Promise<Void> {
     return Promise.parallel(.main) {
       let themeColor = SIDColor(
-        light: UIColor(nitroHex: themeColorLight) ?? .brand,
-        dark: UIColor(nitroHex: themeColorDark) ?? .brand
+        light: UIColor(hex: themeColorLight) ?? .brand,
+        dark: UIColor(hex: themeColorDark) ?? .brand
       )
       let uiPreferences = SIDUIPreferences(
         themeColor: themeColor,
@@ -36,7 +36,7 @@ final class NitroSber: HybridNitroSberSpec {
       )
 
       // NOTE: SIDSDK iOS is stateful and should be initialized early.
-      SID.initializer.initialize(stand: Self.toSidStandType(standType))
+      SID.initializer.initialize(stand: SIDStandType(fromString: standType?.stringValue ?? "prom"))
       SID.settings.applyUIPreferences(preferences: uiPreferences)
       SID.settings.applyMainPreferences(
         clientID: clientId,
@@ -74,60 +74,6 @@ final class NitroSber: HybridNitroSberSpec {
 
       SID.login.auth(request: request, viewController: currentVC)
     }
-  }
-
-  private static func toSidStandType(_ standType: SID_STAND?) -> SIDStandType {
-    // Map TS enum to SIDSDK stand type.
-    switch standType {
-    case .psiCloud:
-      return SIDStandType(fromString: "psi_cloud")
-    case .prom:
-      return SIDStandType(fromString: "prom")
-    case .psi:
-      return SIDStandType(fromString: "psi")
-    case .ift:
-      return SIDStandType(fromString: "ift")
-    case .iftCloud:
-      return SIDStandType(fromString: "ift_cloud")
-    case nil:
-      return SIDStandType(fromString: "prom")
-    }
-  }
-}
-
-private extension UIColor {
-  /// Parses "#RRGGBB" / "RRGGBB" / "#AARRGGBB" / "AARRGGBB".
-  convenience init?(nitroHex: String?) {
-    guard var hex = nitroHex?.trimmingCharacters(in: .whitespacesAndNewlines), !hex.isEmpty else {
-      return nil
-    }
-    if hex.hasPrefix("#") { hex.removeFirst() }
-
-    let value = UInt64(hex, radix: 16)
-    guard let value else { return nil }
-
-    let a, r, g, b: UInt64
-    switch hex.count {
-    case 6:
-      a = 0xFF
-      r = (value >> 16) & 0xFF
-      g = (value >> 8) & 0xFF
-      b = value & 0xFF
-    case 8:
-      a = (value >> 24) & 0xFF
-      r = (value >> 16) & 0xFF
-      g = (value >> 8) & 0xFF
-      b = value & 0xFF
-    default:
-      return nil
-    }
-
-    self.init(
-      red: CGFloat(r) / 255.0,
-      green: CGFloat(g) / 255.0,
-      blue: CGFloat(b) / 255.0,
-      alpha: CGFloat(a) / 255.0
-    )
   }
 }
 
