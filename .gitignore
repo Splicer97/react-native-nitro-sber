@@ -81,3 +81,10 @@ lib/
 # React Native Codegen
 ios/generated
 android/generated
+
+# Nitro/Nitrogen
+# Keep generated Nitro boilerplate committed, otherwise consumers can't `pod install`
+# (NitroSber.podspec loads `nitrogen/generated/ios/NitroSber+autolinking.rb`).
+nitrogen/*
+!nitrogen/generated/
+!nitrogen/generated/**
